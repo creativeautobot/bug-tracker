@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Unit Tests - Backend') {
             agent {
@@ -10,12 +9,12 @@ pipeline {
                     image 'snakee/golang-junit:1.21'
                     reuseNode true
                 }
-            }
-        
+            }        
             steps {
-                checkout scm
+                withEnv(["GOCACHE=${WORKSPACE}/.cache", "GOPATH=${WORKSPACE}/.go"]) {
                 dir('bugtracker-backend'){
                     sh 'go test -v ./...'
+                }
                 }
             }
         }
