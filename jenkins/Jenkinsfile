@@ -13,6 +13,7 @@ pipeline {
             }
         
             steps {
+                checkout scm
                 dir('bugtracker-backend'){
                     sh 'go test -v ./...'
                 }
